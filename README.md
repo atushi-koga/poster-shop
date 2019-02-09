@@ -8,8 +8,24 @@ Source code for the case-study project from the course [Build Your First Vue.js 
 See the completed project here: [http://poster-shop.vuejsdevelopers.com/](http://poster-shop.vuejsdevelopers.com/)
 
 #### Pre-installation
+Git
+Docker, Docker Machine, Docker Compose
+Node.js >=4
+NPM
 
-Ensure [Node.js  >=4](https://nodejs.org/en/download/), [NPM](https://docs.npmjs.com) and [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) are installed on your system
+#### make developing Environment
+git init
+git clone <this repository URL>
+
+docker-machine create --driver virtualbox poster-shop
+eval $(docker-machine env poster-shop)
+docker-compose up -d
+
+docker-compose exec web bash
+npm install
+npm i -S vue@2.5.17
+npm run serve
+
  
 #### Installation
 
