@@ -60,14 +60,13 @@ var vue = new Vue({
             }
         },
         onSubmit: function(){
-            this.products = [];
-            this.results = [];
             this.loading = true;
             var path = "search?q=".concat(this.search);
             this.$http.get(path).then(function(response){
                 this.results = response.body;
+                this.products = this.results.slice(0, LOAD_NUM);
+                
                 this.lastSearch = this.search;
-                this.appendResults();
                 this.loading = false;
             });
         },
@@ -87,4 +86,3 @@ var vue = new Vue({
         }
     }
 });
-
