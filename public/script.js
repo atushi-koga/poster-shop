@@ -1,15 +1,30 @@
+var LOAD_NUM = 4;
+var watcher;
+
 var vue = new Vue({
     el: "#app",
     data: {
         total: 0,
         products: [],
         cart: [],
-        search: "flower",
+        search: "cat",
         lastSearch: "",
-        loading: false
+        loading: false,
+        results: []
     },
     created: function () {
         this.onSubmit();
+    },
+    beforeUpdate: function(){
+        if(watcher){
+            watcher.destroy();
+            watcher = null;
+        }
+    },
+    updated: function(){
+        var sensor = document.querySelector("#product-list-bottom");
+        watcher = scrollMonitor.create(sensor);
+        watcher.enterViewport(this.appendResults);
     },
     methods: {
         addToCart: function(product){
@@ -46,16 +61,24 @@ var vue = new Vue({
         },
         onSubmit: function(){
             this.products = [];
+            this.results = [];
             this.loading = true;
             var path = "search?q=".concat(this.search);
             this.$http.get(path).then(function(response){
-                // setTimeout(function(){
-                    this.loading = false;
-                    this.lastSearch = this.search;
-                    this.products = response.body;
-
-                // }.bind(this), 3000);
+                this.results = response.body;
+                this.lastSearch = this.search;
+                this.appendResults();
+                this.loading = false;
             });
+        },
+        appendResults: function(){
+            if(this.products.length < this.results.length){
+                var toAppend = this.results.slice(
+                    this.products.length,
+                    LOAD_NUM + this.products.length
+                );
+                this.products = this.products.concat(toAppend);
+            }
         }
     },
     filters: {
@@ -64,3 +87,4 @@ var vue = new Vue({
         }
     }
 });
+

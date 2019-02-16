@@ -25,6 +25,7 @@ docker-compose exec web bash
 npm install
 npm i -S vue@2.5.17
 npm i -S vue-resource@1.5.1
+npm i -S scrollmonitor@1.2.0
 npm run serve
 
  
