@@ -1,7 +1,7 @@
 var LOAD_NUM = 4;
 var watcher;
 
-var vue = new Vue({
+new Vue({
     el: "#app",
     data: {
         total: 0,
@@ -65,7 +65,7 @@ var vue = new Vue({
             this.$http.get(path).then(function(response){
                 this.results = response.body;
                 this.products = this.results.slice(0, LOAD_NUM);
-                
+
                 this.lastSearch = this.search;
                 this.loading = false;
             });
